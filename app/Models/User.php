@@ -42,4 +42,38 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * 自分が登録した書籍（１対多）
+     */
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
+
+    /**
+     * お気に入り登録した書籍（多対多）
+     */
+    public function favorites()
+    {
+        return $this->belongsToMany(Book::class, 'favorites')
+            ->withTimestamps();
+    }
+
+    /**
+     * 自分が投稿したレビュー（１対多）
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * いいねしたレビュー（多対多）
+     */
+    public function likes()
+    {
+        return $this->belongsToMany(Review::class, 'review_likes')
+            ->withTimestamps();
+    }
 }
